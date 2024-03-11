@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Task_1.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    [ApiController]
+    public class UserController : ControllerBase
     {
         [HttpGet]
         public ActionResult Greet(string fullname, DateTime dateOfBirth)
@@ -13,6 +12,15 @@ namespace Task_1.Controllers
         {
             var age = CalculateAge(dateOfBirth);
             return Ok($"Hello, my name is {fullname} and I am {age} years old");
+        }
+
+        [HttpGet("name")]
+        public ActionResult GetNames(string name)
+
+        {
+            var fullNames = new List<string> { "Sanjula Dulshan", "Ravindu Yasith","Piumika Saranga" };
+            var matchingNames = fullNames.Where(n=>n.Contains(name)).ToList();
+            return Ok(matchingNames);
         }
 
         private static int CalculateAge(DateTime dateOfBirth)
